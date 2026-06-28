@@ -116,11 +116,65 @@ const incomeRoadmapAdditions = {
   "월 200만원 이상": ["수익 기준", "브랜드와 시스템", "혼자 일하는 방식에서 벗어나 강의 과정, 파트너, 온라인 상품을 함께 키웁니다."],
 };
 
+const japanModelBase = [
+  {
+    title: "지역 기반 작은 일거리",
+    text: "일본 실버인재센터처럼 가벼운 지역 역할부터 시작하면 심리적 부담이 낮고 지속성이 높습니다.",
+  },
+  {
+    title: "공공 지원과 훈련 연결",
+    text: "일본의 고령자 고용지원처럼 상담, 직업훈련, 재취업 정보를 한 흐름으로 묶어야 사용자가 덜 헤맵니다.",
+  },
+  {
+    title: "짧은 입력과 매칭",
+    text: "민간 시니어 구직 서비스처럼 복잡한 이력서보다 경험, 희망조건, 근무방식을 먼저 묻는 편이 좋습니다.",
+  },
+];
+
+const japanModelByWorkStyle = {
+  "주 2~3일 가볍게": {
+    title: "단시간 참여 모델",
+    text: "처음부터 풀타임을 권하지 말고 주 1~3회 활동, 프로젝트형 일, 시간제 자문을 우선 제안하세요.",
+  },
+  "온라인 중심": {
+    title: "온라인 상담 모델",
+    text: "이동 부담을 줄이기 위해 화상 상담, 녹화 강의, 문서 점검처럼 집에서도 가능한 상품을 붙입니다.",
+  },
+  "지역에서 활동": {
+    title: "지역 커뮤니티 모델",
+    text: "주민센터, 복지관, 상인회, 학교와 연결되는 역할을 추천하면 일본식 지역 순환형 일자리에 가까워집니다.",
+  },
+  "작게 창업": {
+    title: "소규모 사업 실험",
+    text: "큰 창업보다 1인 서비스, 소그룹 교육, 월 구독 점검처럼 작은 비용으로 검증하는 방식을 제안합니다.",
+  },
+};
+
+const japanModelByIncome = {
+  "월 50만원 이하": {
+    title: "보람 중심 수익",
+    text: "활동비 수준의 목표라면 사회참여, 관계 회복, 건강한 루틴을 수입만큼 중요한 지표로 보여줍니다.",
+  },
+  "월 50~100만원": {
+    title: "반복 가능한 부업",
+    text: "월 몇 회의 상담, 강의, 점검처럼 쉽게 반복할 수 있는 작은 단위 상품을 추천합니다.",
+  },
+  "월 100~200만원": {
+    title: "전문성 기반 수입",
+    text: "개별 서비스만으로는 부족할 수 있어 소그룹 과정과 자료 판매를 함께 설계합니다.",
+  },
+  "월 200만원 이상": {
+    title: "전문가 네트워크",
+    text: "개인 노동시간에만 의존하지 않도록 파트너, 교육 과정, 추천 네트워크를 만드는 단계가 필요합니다.",
+  },
+};
+
 const resultTitle = document.querySelector("#resultTitle");
 const resultSummary = document.querySelector("#resultSummary");
 const assetList = document.querySelector("#assetList");
 const roadmapList = document.querySelector("#roadmapList");
 const longCareerList = document.querySelector("#longCareerList");
+const japanModelList = document.querySelector("#japanModelList");
 const noteInput = document.querySelector("#note");
 
 document.querySelectorAll(".choice-grid").forEach((group) => {
@@ -171,6 +225,27 @@ function renderLongCareer(items) {
   });
 }
 
+function renderJapanModels() {
+  const items = [
+    ...japanModelBase,
+    japanModelByWorkStyle[state.workStyle],
+    japanModelByIncome[state.incomeGoal],
+  ];
+
+  japanModelList.innerHTML = "";
+  items.forEach((item) => {
+    const article = document.createElement("article");
+    const strong = document.createElement("strong");
+    const p = document.createElement("p");
+
+    strong.textContent = item.title;
+    p.textContent = item.text;
+
+    article.append(strong, p);
+    japanModelList.appendChild(article);
+  });
+}
+
 function renderResult(fromSubmit = false) {
   const career = careerMap[state.experience];
   const note = noteInput.value.trim();
@@ -181,6 +256,7 @@ function renderResult(fromSubmit = false) {
   resultSummary.textContent = `${career.summary} ${strengthAdditions[state.strength]} ${workStyleAdditions[state.workStyle]} ${incomeGoalAdditions[state.incomeGoal]}${noteLine}`;
 
   renderList(assetList, career.assets);
+  renderJapanModels();
   renderList(roadmapList, career.plan);
   renderLongCareer(longTermPlan);
 
