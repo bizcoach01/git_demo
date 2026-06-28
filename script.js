@@ -2,6 +2,7 @@ const state = {
   experience: "관리와 운영",
   strength: "문제 정리",
   workStyle: "주 2~3일 가볍게",
+  incomeGoal: "월 50만원 이하",
 };
 
 const careerMap = {
@@ -101,6 +102,20 @@ const workStyleAdditions = {
   "작게 창업": "큰 투자보다 1인 서비스, 소그룹 교육, 월 구독 상담처럼 작게 검증하세요.",
 };
 
+const incomeGoalAdditions = {
+  "월 50만원 이하": "월 50만원 이하는 부담 없는 활동비 목표로 잡고, 지인 소개와 지역 모임부터 시작하는 것이 좋습니다.",
+  "월 50~100만원": "월 50~100만원은 월 4~8회 상담, 강의, 점검처럼 반복 가능한 작은 상품이 필요합니다.",
+  "월 100~200만원": "월 100~200만원은 1:1 서비스와 소그룹 교육을 함께 운영해 안정적인 수입 흐름을 만들어야 합니다.",
+  "월 200만원 이상": "월 200만원 이상은 개인 역량만으로는 한계가 있으니 프로그램화, 파트너 협업, 온라인 판매까지 함께 설계하세요.",
+};
+
+const incomeRoadmapAdditions = {
+  "월 50만원 이하": ["수익 기준", "월 1~2회 활동", "생활비 보충보다 즐겁고 꾸준한 활동을 기준으로 설계합니다."],
+  "월 50~100만원": ["수익 기준", "작은 반복 상품", "상담, 점검, 강의 중 하나를 정해 월 단위로 반복 판매합니다."],
+  "월 100~200만원": ["수익 기준", "혼합 수익 구조", "개별 상담, 소그룹 교육, 자료 판매를 조합해 수입원을 나눕니다."],
+  "월 200만원 이상": ["수익 기준", "브랜드와 시스템", "혼자 일하는 방식에서 벗어나 강의 과정, 파트너, 온라인 상품을 함께 키웁니다."],
+};
+
 const resultTitle = document.querySelector("#resultTitle");
 const resultSummary = document.querySelector("#resultSummary");
 const assetList = document.querySelector("#assetList");
@@ -160,13 +175,14 @@ function renderResult(fromSubmit = false) {
   const career = careerMap[state.experience];
   const note = noteInput.value.trim();
   const noteLine = note ? ` 특히 "${note}" 경험은 첫 상품이나 첫 강의 주제로 만들기 좋습니다.` : "";
+  const longTermPlan = [...career.longTerm, incomeRoadmapAdditions[state.incomeGoal]];
 
   resultTitle.textContent = career.title;
-  resultSummary.textContent = `${career.summary} ${strengthAdditions[state.strength]} ${workStyleAdditions[state.workStyle]}${noteLine}`;
+  resultSummary.textContent = `${career.summary} ${strengthAdditions[state.strength]} ${workStyleAdditions[state.workStyle]} ${incomeGoalAdditions[state.incomeGoal]}${noteLine}`;
 
   renderList(assetList, career.assets);
   renderList(roadmapList, career.plan);
-  renderLongCareer(career.longTerm);
+  renderLongCareer(longTermPlan);
 
   if (fromSubmit && window.innerWidth < 900) {
     document.querySelector(".result").scrollIntoView({ behavior: "smooth", block: "start" });

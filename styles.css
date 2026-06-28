@@ -151,6 +151,10 @@ h1 {
   gap: 10px;
 }
 
+.income-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .choice {
   min-height: 58px;
   padding: 12px 14px;
@@ -311,7 +315,7 @@ ol {
   }
 
   .intro-panel {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .intro-panel div {
@@ -321,6 +325,10 @@ ol {
 
   .result {
     position: static;
+  }
+
+  .income-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
