@@ -244,8 +244,15 @@ h1 {
   border-top: 1px solid var(--line);
 }
 
+.long-career {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
 .asset-box h3,
-.roadmap h3 {
+.roadmap h3,
+.long-career h3 {
   margin: 0 0 12px;
   font-size: 1.18rem;
 }
@@ -258,6 +265,38 @@ ol {
   padding-left: 22px;
   color: var(--ink);
   font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.timeline article {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 4px 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f8f3;
+}
+
+.timeline span {
+  grid-row: span 2;
+  color: var(--green-dark);
+  font-weight: 900;
+}
+
+.timeline strong {
+  font-size: 1.03rem;
+}
+
+.timeline p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
   line-height: 1.55;
 }
 
@@ -307,5 +346,13 @@ ol {
   .designer,
   .result {
     padding: 18px;
+  }
+
+  .timeline article {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline span {
+    grid-row: auto;
   }
 }
